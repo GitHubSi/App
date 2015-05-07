@@ -1,0 +1,17 @@
+html
+    head
+        meta(charset='utf-8')
+        link(rel="stylesheet",href="style.css")
+        title 注册
+    body
+        form(action='/register/index', method='POST')
+            p 
+                span 用户名
+                input(type='text',name='username',value='')
+            p 
+                span 密码
+                input(type='password',name='password')
+            p
+                span 邮箱
+                input(type='text',name='email')
+            input(type='submit',value='注册')

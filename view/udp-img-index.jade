@@ -1,0 +1,11 @@
+﻿form(action="/udp-img-client/uploadAction", method="post",ENCTYPE="multipart/form-data",name="field")
+	input(type='text',name='width')
+	input(type='text',name='height')
+	input(type='file',name='image')
+	div
+		input(type='radio', value='1',name='type')
+		| SuoFang
+	div
+		input(type='radio',value='2',name='type') 
+		| JianQie
+	button(type='submit') | UPLOAD IMAGE

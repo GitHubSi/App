@@ -1,0 +1,57 @@
+span {
+    margin:15px;
+    line-height:12px;
+    color:red;
+    width:100px;
+    text-align:right;
+}
+//uploadify css
+.file_upload_pic{
+    background-image: url('/resource/image/bdmore.png');
+    line-height: 25px;
+    height:25px;
+    text-align: center;
+    margin-top:30px;
+    background: #fff;
+    border-radius: 3px;
+    border: 1px solid #ccc
+}
+.uploadify:hover .uploadify-button{
+    background-image: url('/resource/image/bdmore.png');
+}
+/*login css*/
+.login {
+    border-radius: 3px;
+    border:1px solid #ccc;
+    width:450px;
+    height:300px;
+    position: absolute;
+    top:100px;
+    left:200px;
+    background-image: url("login.jpg");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    text-align: center;
+}
+.login .line{
+    height: 38px;
+    margin: 3px;
+    font-size: 18px;
+    margin-left: 20px;
+}
+.login .line .label{
+    width:100px;
+    text-align: right;
+    margin-right: 8px;
+    float:left;
+}
+.login .line .cont{
+    float:left;
+}
+.login form{
+    margin-top: 140px;
+}
+.login .line .submit_center{
+    margin-right: 14px;
+}

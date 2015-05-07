@@ -1,0 +1,14 @@
+﻿html
+	head
+		meta(charset='utf-8')
+		link(rel="stylesheet",href="style.css")
+		title 主页
+	body
+		p 你好
+			span #{username},欢迎你！
+		form(action="/home?action=upload",enctype="multipart/form-data",method="post")
+			input(type="text",name="title")
+			input(type="file",name="upload",multiple="multiple")
+			input(type="submit",value="上传头像")
+		div
+			img(src='#{imgUrl}',alt='头像显示')
