@@ -1,4 +1,4 @@
-﻿var param=pathname.substr(2);
+var param=pathname.substr(2);
 var firstParam=pathname.substr(1,1).toUpperCase();
 var functionName='res'+firstParam+param;
 response=res;
@@ -11,3 +11,4 @@ else if(pathname=='/favicon.ico'){
 else{
 	eval(functionName+'()');
 }
+//test the github checkout 
