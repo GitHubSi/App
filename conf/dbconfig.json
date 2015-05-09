@@ -1,0 +1,18 @@
+{
+    "db": {
+        "host": "192.168.187.129",
+        "port": 3306,
+        "user": "fuhui",
+        "password": "123456",
+        "dbName": "hdaily"
+    },
+    "mdb": {
+        "host": "192.168.187.129",
+        "port": 27017,
+        "dbName": "hdaily"
+    },
+    "redis":{
+        "host":"192.168.187.129",
+        "port":6379
+    }
+}

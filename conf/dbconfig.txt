@@ -1,0 +1,1 @@
+﻿{"db":{"host":"192.168.187.129","port":"3306","user":"root","password":"Fh910611","dbName":"hdaily"},"mdb":{"host":"192.168.187.129","port":"27017","dbName":"hdaily"}}

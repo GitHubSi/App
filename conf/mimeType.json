@@ -1,0 +1,15 @@
+{
+    "mime": {
+        "gif": "image/gif",
+        "ief": "image/ief",
+        "jpe": "image/jpeg",
+        "jpeg": "image/jpeg",
+        "jpg": "image/jpeg",
+        "image/bmp": "bmp",
+        "js": "application/x-javascript",
+        "ss": "text/css",
+        "htm": "text/html",
+        "html": "text/html",
+        "ico": "image/x-icon"
+    }
+}
