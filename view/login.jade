@@ -1,20 +1,27 @@
 html
     head
-        meta(charset='utf-8')
-        link(rel="stylesheet",href="style.css")
-        title 登录
+        title 登录 
+        meta(http-equiv="Content-Type",content="text/html; charset=utf-8")
+        script(type="text/javascript",src="login.js")
+        link(href="login.css",rel="stylesheet",type="text/css") 
     body
-        div.login
-            form(action='/login/login', method='POST')
-                div.line 
-                    div.label 用户名
-                    div.cont
-                        input(type='text',name='username',placeholder="用户名" )
-                div.line
-                    div.label 密码
-                    div.cont
-                        input(type='password',name='pwd',placeholder="密码")
-                div.line
-                    input(type='submit',value='登录',class="submit_center")
-                    a(href='/register.jade') 注册新用户
+        h1 登录
+        div(class="login",style="margin-top:50px;")
+            div(class="web_qr_login",id="web_qr_login",style="display: block;height: 235px;")    
+                div(class="web_login",id="web_login")
+                    div(class="login-box")
+                        div(class="login_form")
+                            form(action='/login/login', method='POST',name="loginform",accept-charset="utf-8",id="login_form",class="loginForm")
+                                input(type="hidden",name="did",value="0")
+                                input(type="hidden",name="to",value="log")
+                                div(class="uinArea",id="uinArea")
+                                    label(class="input-tips",for="u") 帐号：
+                                    div(class="inputOuter",id="uArea")
+                                        input(type="text",id="u",name="username",class="inputstyle")
+                                div(class="pwdArea",id="pwdArea")
+                                    label(class="input-tips",for="p") 密码： 
+                                    div(class="inputOuter",id="pArea")
+                                        input(type="password",id="p",name="p",class="inputstyle")
+                                div(style="padding-left:50px;margin-top:20px;")
+                                    input(type="submit",value="登 录",style="width:150px;",class="button_blue")    
                     
