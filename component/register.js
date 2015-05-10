@@ -13,7 +13,7 @@ module.exports = function () {
     this.init = function (response, request) {
         res = response;
         req = request;
-    }
+    };
 
     this.index = function () {
         //获取用户提交的数据信息
@@ -32,7 +32,6 @@ module.exports = function () {
                             content += "<span><a href='http://127.0.0.1:3000/register/validEmail?key=" + buf + "&username=" + value.username + "'>验证邮箱</a></span>";
                             mail.sendMail(value.email, "验证网站邮箱", content);
                         });
-
                     }
                 }
                 else {
@@ -40,11 +39,11 @@ module.exports = function () {
                 }
             });
         });
-    }
+    };
 
     this.view = function () {
         res.render('register.jade');
-    }
+    };
 
     /*
      * 验证邮箱
@@ -63,6 +62,6 @@ module.exports = function () {
             });
         }
     };
-}
+};
 
 
