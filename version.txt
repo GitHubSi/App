@@ -2,3 +2,4 @@
 	 修改了register.jade文件，使页面整齐；同时引入了百度CDN中jQuery脚本；为register.jade文件添加了sweet.css和register.js；
 2015/5/10	修改了httpParam中get/post方法，添加了cookie方法，主要是修改的函数的参数问题，然后修改了session中getCookie方法；
 		登录页面login.jade的修改，添加了login.css和login.js文件；
+		网站首页index.jade的修改，添加了index.css和**.min.css文件
