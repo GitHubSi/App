@@ -14,7 +14,7 @@ module.exports = function () {
     this.init = function (response, request) {
         res = response;
         req = request;
-    }
+    };
 
     /**
      * 
@@ -30,8 +30,8 @@ module.exports = function () {
 //                    res.render('home.jade', {'username': username});
                 }
             });
-        })
-    }
+        });
+    };
 
     this.chk = function () {
         //验证curl接口
@@ -60,7 +60,7 @@ module.exports = function () {
      */
     this.view = function () {
         res.render('login.jade');
-    }
+    };
 
     this.register = function () {
         var param = lib.httpParam.POST(req, '', function (value) {
