@@ -11,6 +11,7 @@ $(document).ready(
         });
         if(_submit){
             $(".form").submit();
+            alert(12);
         }
     })
 );
