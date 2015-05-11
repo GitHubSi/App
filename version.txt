@@ -3,3 +3,6 @@
 2015/5/10	修改了httpParam中get/post方法，添加了cookie方法，主要是修改的函数的参数问题，然后修改了session中getCookie方法；
 		登录页面login.jade的修改，添加了login.css和login.js文件；
 		网站首页index.jade的修改，添加了index.css和**.min.css文件
+2015/5/11	修改了session模块，将session模块细化成好几部分，将session存储的内容修改成userId和expires；修改了数据库findOneById方法；添加了
+		登录检验用户名的方法；添加了页面切换时session更新的部分；
+		bolg介绍：http://blog.csdn.net/whynottrythis/article/details

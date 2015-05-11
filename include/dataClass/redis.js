@@ -1,20 +1,22 @@
 /**
  * @description redis操作的基类
- * @version 测试功能实现版
+ * @version 测试功能实现版; hash
  */
 var redis = require("redis");
 var configRead = require(INCLUDE + 'configRead.js');
 
+/*
+ * hash algorithm need to be added
+ */
 var redisConfig = configRead.get('dbconfig.json', 'redis');
 var client = redis.createClient(redisConfig["port"], redisConfig["host"]);
+
 client.on("connect", function () {
     setInterval(client.ping(), 1000 * 60 * 30);
 });
 client.on("error", function (err) {
     console.log(err);
 });
-
-setInterval(client.ping(), 1000 * 60 * 30);
 
 /**
  * @description 存储一个键值对
@@ -29,18 +31,19 @@ exports.set = function (key, value) {
  * @param {json} 对应的值
  * @returns {undefined}
  */
-exports.hmset = function (key, json, expires) {
+exports.hmset = function (key, json) {
+    var expires = arguments[2];
     try {
         client.hmset(key, json);
         if (expires) {
-            client.expire(key,expires);
+            client.expire(key, expires);
         }
         else {
-            client.expire(key,60 * 30);
+            client.expire(key, 60 * 30);
         }
     }
     catch (err) {
-        console.log("lalalla:"+err);
+        console.log("redis error:" + err);
     }
 }
 
@@ -62,27 +65,27 @@ exports.del = function (key) {
  * @param {type} key
  * @returns {undefined}
  */
-exports.hget = function (key, callback) {
+exports.hgetall = function (key, callback) {
     client.hgetall(key, function (err, value) {
         if (!err) {
             callback(value);
         }
         else {
-            callback(0);
+            callback(false);
         }
     });
 }
 
 /**
  * @description 判断key是否存在
- * 
+ * if key existed, update the key's expire again
  */
 exports.exist = function (key, callback) {
     client.exists(key, function (err, reply) {
         if (reply === 1) {
-            callback(1);
-        } else {
-            callback(0);
-        }
+            client.expire(key, 60 * 30);
+            callback(true);
+        } 
+        callback(false);
     });
 }

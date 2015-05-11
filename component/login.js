@@ -6,8 +6,10 @@
 
 var res;
 var req;
+var userId;
 var UserModule = require(DATACLASS + "usermodule");
 var UserModuleRead = new UserModule();
+var digist = require(INCLUDE + "encode_class/crypto.js");
 
 module.exports = function () {
     
@@ -21,13 +23,14 @@ module.exports = function () {
      * @description 对用户登录的信息进行验证
      */
     this.login = function () {
-        lib.httpParam.POST(req, '', function (value) {
-            var username = value.username;
-            var password = value.pwd;
-            UserModuleRead.checkUser(username, password, function (result) {
+        lib.httpParam.POST(req, function (value) {
+            value.password = digist.tcrypto(value.password);
+            UserModuleRead.checkUser(value, function (result) {
                 if (result !== false) {
-                    lib.session.setSession(res, req, username);
-//                    res.render('home.jade', {'username': username});
+                    lib.session.setSession(res, req, result._id, function (session){
+                        res.setHeader('Set-Cookie', 'SESSID=' + session.SESSID);
+                        res.render('index.jade', {'username': result.username});
+                    });
                 }
             });
         });
@@ -43,22 +46,16 @@ module.exports = function () {
         //获取用户传递的参数
         var name;
         var pwd;
-        //Q.这个方法没有调用全局变量
-        //Q.如何调用这个模块其他的方法
-        // getvalue.POST(req,'name',function(value){
-        // name=value;
-        // console.log(value);
-        // });
-        // getvalue.POST(req,'pwd',function(value){
-        // pwd=value;
-        // console.log(value);
-        // });
-        // console.log(name+':'+pwd);
     }
     /*
      * initialize login ui
      */
     this.view = function () {
+        lib.session.isLogin(res, req,function(ret){
+            if(ret){
+                userId=ret.userId;
+            }
+        });
         res.render('login.jade');
     };
 

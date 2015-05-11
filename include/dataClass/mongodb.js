@@ -88,7 +88,7 @@ module.exports = function () {
     /**
      * 查找单条数据
      * 并不通过系统的mongodb进行查找
-     *
+     * change: use findOne to replace find method;
      */
     this.findOneByID = function (tableName, whereJson, callback) {
         connection(function (mdbConn) {
@@ -96,20 +96,15 @@ module.exports = function () {
                 if(err){
                     return;
                 }
-                var cursor = collection.find(whereJson);
-                cursor.toArray(function (err, docs) {
-                    if (err) {
-                        callback(false);
-                    }
-                    else {
-                        var row = docs.shift();     //undefined
-                        callback(row);
-                    }
-                });
-                cursor.rewind();
-            })
+                var document = collection.findOne(whereJson);
+                if(document){
+                    callback(document);
+                }else{
+                    callback(false);
+                }
+            });
         });
-    }
+    };
 
     /**
      * 更新用户的操作
