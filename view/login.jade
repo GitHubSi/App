@@ -12,8 +12,6 @@ html
                     div(class="login-box")
                         div(class="login_form")
                             form(action='/login/login', method='POST',name="loginform",accept-charset="utf-8",id="login_form",class="loginForm")
-                                input(type="hidden",name="did",value="0")
-                                input(type="hidden",name="to",value="log")
                                 div(class="uinArea",id="uinArea")
                                     label(class="input-tips",for="u") 帐号：
                                     div(class="inputOuter",id="uArea")
@@ -21,7 +19,7 @@ html
                                 div(class="pwdArea",id="pwdArea")
                                     label(class="input-tips",for="p") 密码： 
                                     div(class="inputOuter",id="pArea")
-                                        input(type="password",id="p",name="p",class="inputstyle")
+                                        input(type="password",id="p",name="password",class="inputstyle")
                                 div(style="padding-left:50px;margin-top:20px;")
                                     input(type="submit",value="登 录",style="width:150px;",class="button_blue")    
                     

@@ -32,6 +32,9 @@ module.exports = function () {
                         res.render('index.jade', {'username': result.username});
                     });
                 }
+                else{
+                    res.render('login.jade', {'error': "用户名或者密码错误"});
+                }
             });
         });
     };

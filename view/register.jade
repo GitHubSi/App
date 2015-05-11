@@ -10,7 +10,6 @@ html(lang="en")
                 center
                     span 注册
                 form(class="form", name="betaform", action="/register/index", method='POST')
-                    input( type="hidden", name="action", value="send")
                     span name: 
                     div(class="fieldHolder")
                         input(type="text", name="username", class="textInput")
@@ -19,10 +18,10 @@ html(lang="en")
                         input(type="text", name="email", class="textInput" )
                     span password:
                     div(class="fieldHolder") 
-                        input(type="text", name="password", class="textInput" )
+                        input(type="text", name="password",id="password1", class="textInput" )
                     span password again:
                     div(class="fieldHolder") 
-                        input(type="text", name="password2", class="textInput" )
+                        input(type="text", id="password2", class="textInput" )
                     a(id="submit")
                         div(id="signup")
                             span 确定

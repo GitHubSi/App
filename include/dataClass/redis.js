@@ -85,7 +85,7 @@ exports.exist = function (key, callback) {
         if (reply === 1) {
             client.expire(key, 60 * 30);
             callback(true);
-        } 
+        }
         callback(false);
     });
 }

@@ -6,3 +6,4 @@
 2015/5/11	修改了session模块，将session模块细化成好几部分，将session存储的内容修改成userId和expires；修改了数据库findOneById方法；添加了
 		登录检验用户名的方法；添加了页面切换时session更新的部分；
 		bolg介绍：http://blog.csdn.net/whynottrythis/article/details
+		调通了用户登录的流程，修改了index.jade,添加了用户登录的if判断；修改了findOne方法；修改了静态资源的路由请求

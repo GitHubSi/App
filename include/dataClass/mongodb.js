@@ -93,15 +93,16 @@ module.exports = function () {
     this.findOneByID = function (tableName, whereJson, callback) {
         connection(function (mdbConn) {
             mdbConn.collection(tableName, function (err, collection) {
-                if(err){
+                if (err) {
                     return;
                 }
-                var document = collection.findOne(whereJson);
-                if(document){
-                    callback(document);
-                }else{
-                    callback(false);
-                }
+                collection.findOne(whereJson, function (err, item) {
+                    if (item) {
+                        callback(item);
+                    } else {
+                        callback(false);
+                    }
+                });
             });
         });
     };
@@ -110,7 +111,7 @@ module.exports = function () {
      * 更新用户的操作
      * 该方法更新了option参数，之前使用默认值{safe: true}
      */
-    this.modify = function (tableName, whereJson, rowInfo,option, callback) {
+    this.modify = function (tableName, whereJson, rowInfo, option, callback) {
         connection(function (mdbConn) {
             mdbConn.collection(tableName, function (err, collection) {
                 collection.update(whereJson, rowInfo, option, function (err) {

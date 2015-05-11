@@ -11,7 +11,10 @@ html
                     div(class="row header")
                         div(class="col-md-2 col-md-offset-2  col-xs-4 col-xs-offset-4")
                             a(href="index.php")
-                                img(class="me",src="img/face.jpg", width="100px;")
+                            if (username)
+                                span 您好，#{username}！
+                            else
+                                img(class="me",src="head.jpg", width="100px;")
                         div(class="col-md-4 col-md-offset-2 nav col-xs-10 col-xs-offset-1")
                             div(class="row rn")
                                 div(class="col-xs-4 col-md-4")

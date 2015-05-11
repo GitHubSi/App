@@ -79,7 +79,8 @@ exports.router = function (res, req) {
             default:
                 realPath = IMAGE;
         }
-        realPath += requirepath;
+        var part = requirepath.split('/');
+        realPath += part.pop();
         //deal with the static resource
         staticManage.staticManage(requirepath, realPath, res, req);
     }
