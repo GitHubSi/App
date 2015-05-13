@@ -2,6 +2,7 @@ html
     head
         title 登录 
         meta(http-equiv="Content-Type",content="text/html; charset=utf-8")
+        script(type="text/javascript",src="http://apps.bdimg.com/libs/jquery/2.1.1/jquery.min.js")
         script(type="text/javascript",src="login.js")
         link(href="login.css",rel="stylesheet",type="text/css") 
     body
@@ -15,11 +16,13 @@ html
                                 div(class="uinArea",id="uinArea")
                                     label(class="input-tips",for="u") 帐号：
                                     div(class="inputOuter",id="uArea")
-                                        input(type="text",id="u",name="username",class="inputstyle")
+                                        input(type="text",id="username",name="username",class="inputstyle")
                                 div(class="pwdArea",id="pwdArea")
                                     label(class="input-tips",for="p") 密码： 
                                     div(class="inputOuter",id="pArea")
-                                        input(type="password",id="p",name="password",class="inputstyle")
+                                        input(type="password",id="password",name="password",class="inputstyle")
+                                if(error) 
+                                    span(style="color:red; font-size:small",id="errTip") #{error}
                                 div(style="padding-left:50px;margin-top:20px;")
                                     input(type="submit",value="登 录",style="width:150px;",class="button_blue")    
                     

@@ -12,7 +12,7 @@ var UserModuleRead = new UserModule();
 var digist = require(INCLUDE + "encode_class/crypto.js");
 
 module.exports = function () {
-    
+
     this.init = function (response, request) {
         res = response;
         req = request;
@@ -23,19 +23,33 @@ module.exports = function () {
      * @description 对用户登录的信息进行验证
      */
     this.login = function () {
-        lib.httpParam.POST(req, function (value) {
-            value.password = digist.tcrypto(value.password);
-            UserModuleRead.checkUser(value, function (result) {
-                if (result !== false) {
-                    lib.session.setSession(res, req, result._id, function (session){
-                        res.setHeader('Set-Cookie', 'SESSID=' + session.SESSID);
-                        res.render('index.jade', {'username': result.username});
+        lib.session.isLogin(res, req, function (ret) {
+            if (ret) {
+                //has logined 
+                userId = ret.userId;
+                if (userId) {
+                    res.render('login.jade', {'error': "用户已经登录，请退出后重新登录"});
+                    
+                    return false;
+                }
+            }
+            else {
+                //login
+                lib.httpParam.POST(req, function (value) {
+                    value.password = digist.tcrypto(value.password);
+                    UserModuleRead.checkUser(value, function (result) {
+                        if (result !== false) {
+                            lib.session.setSession(res, req, result._id, function (session) {
+                                res.setHeader('Set-Cookie', 'SESSID=' + session.SESSID + ";path = /");
+                                res.render('index.jade', {'username': result.username});
+                            });
+                        }
+                        else {
+                            res.render('login.jade', {'error': "用户名或者密码错误"});
+                        }
                     });
-                }
-                else{
-                    res.render('login.jade', {'error': "用户名或者密码错误"});
-                }
-            });
+                });
+            }
         });
     };
 
@@ -54,9 +68,9 @@ module.exports = function () {
      * initialize login ui
      */
     this.view = function () {
-        lib.session.isLogin(res, req,function(ret){
-            if(ret){
-                userId=ret.userId;
+        lib.session.isLogin(res, req, function (ret) {
+            if (ret) {
+                userId = ret.userId;
             }
         });
         res.render('login.jade');

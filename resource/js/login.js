@@ -52,13 +52,18 @@ function getParam(pname) {
     }
 }
 
-
-var reMethod = "GET",
-        pwdmin = 6;
-
 $(document).ready(function () {
+    $('#username').on("focus", function () {
+        if ($("#errTip").length > 0) {
+            $("#errTip").remove();
+        }
+    });
 
-
+    $('#password').on("focus", function () {
+        if ($("#errTip").length > 0) {
+            $("#errTip").remove();
+        }
+    });
     $('#reg').click(function () {
 
         if ($('#user').val() == "") {
@@ -136,7 +141,5 @@ $(document).ready(function () {
 
         $('#regUser').submit();
     });
-
-
 });
 

@@ -1,4 +1,4 @@
-﻿/**
+/**
  * @desc linux端的上传图片用户服务器
  * @version 2 修改成了exports的形式
  */

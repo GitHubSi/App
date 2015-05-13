@@ -12,6 +12,8 @@ var mongodb = require('mongodb');
 
 module.exports = function () {
 
+    this.tableName = "";
+    _self = this;
     function connection(callback) {
         if (!mdbConn) {
             var configRead = require(INCLUDE + 'configRead.js');
@@ -90,9 +92,9 @@ module.exports = function () {
      * 并不通过系统的mongodb进行查找
      * change: use findOne to replace find method;
      */
-    this.findOneByID = function (tableName, whereJson, callback) {
+    this.findOneByID = function (whereJson, callback) {
         connection(function (mdbConn) {
-            mdbConn.collection(tableName, function (err, collection) {
+            mdbConn.collection(_self.tableName, function (err, collection) {
                 if (err) {
                     return;
                 }
