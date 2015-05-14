@@ -25,12 +25,14 @@ exports.router = function (res, req) {
     //get the path of request
     var pathname = decodeURI(lib.url.parse(req.url).pathname);
     var requirepath = pathname.slice(1);
-   
+
     if (pathname == '/favicon.ico') {
         return false;
     }
     else if (pathname == '/') {
-        res.render('index.jade');
+        //res.render('index.jade');
+        res.writeHead(302, {'Location': '/index'});
+        res.end();
         return;
     }
     //get the suffix of path

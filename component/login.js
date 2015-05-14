@@ -29,7 +29,6 @@ module.exports = function () {
                 userId = ret.userId;
                 if (userId) {
                     res.render('login.jade', {'error': "用户已经登录，请退出后重新登录"});
-                    
                     return false;
                 }
             }
@@ -63,7 +62,7 @@ module.exports = function () {
         //获取用户传递的参数
         var name;
         var pwd;
-    }
+    };
     /*
      * initialize login ui
      */
@@ -76,19 +75,9 @@ module.exports = function () {
         res.render('login.jade');
     };
 
-    this.register = function () {
-        var param = lib.httpParam.POST(req, '', function (value) {
-            //向文件中写数据
-            var file = lib.fs.readFileSync(CONF + "passwd.txt", 'utf8');
-            lib.fs.writeFile(CONF + "passwd.txt", value.username + " " + value.pwd, function (err) {
-                if (err) {
-                    console.log(err);
-                    return;
-                }
-
-            })
-            //跳转到home.jade页面
-            res.render('home.jade', {'username': value.username});
-        })
-    }
-}
+    this.logout = function(){
+        var sessid = lib.session.getSessionId(res, req);
+        lib.session.delSession(sessid);
+        res.render('index.jade');
+    };
+};

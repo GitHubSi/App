@@ -82,7 +82,7 @@ var server = lib.http.createServer(function (req, res) {
         var page = fn(options);
         res.writeHead(200, {'Content-Type': 'text/html'});
         res.end(page);
-    }
+    };
     //global.session=Session.start(res,req);
     //var cs=encodeModule.encode('hash','md5','fuhui','hex');
     //console.log(cs);

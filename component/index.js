@@ -34,6 +34,9 @@ module.exports = function () {
                     }
                 });
             }
+            else{
+                res.render('index.jade');
+            }
         });
     };
 };

@@ -23,7 +23,10 @@ html
                                 div(class="col-xs-4 col-md-4")
                                     a(href="work.php")  总结
                                 div(class="col-xs-4 col-md-4")
+                                if (!username)
                                     a(href="/login")  登录
+                                else
+                                    a(href="/login/logout")  退出
                                 div(class="col-xs-4 col-md-4")
                                     a(href="/register")    注册
         div(class="row")

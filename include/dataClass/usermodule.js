@@ -41,7 +41,7 @@ module.exports = function () {
      * @description 判断用户是否存在
      */
     this.checkUser = function (value, callback) {
-        _self.findOneByID(_self.tableName,value,callback);
+        _self.findOneByID(value,callback);
     };
 
     /**
@@ -66,8 +66,6 @@ module.exports = function () {
              }
          });
     };
-    
-    this.
 };
 
 
