@@ -22,6 +22,8 @@ html(lang="en")
                     span password again:
                     div(class="fieldHolder") 
                         input(type="text", id="password2", class="textInput" )
+                    if(error) 
+                        span(style="color:red; font-size:small",id="errTip") #{error}
                     a(id="submit")
                         div(id="signup")
                             span 确定

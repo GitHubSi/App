@@ -20,7 +20,7 @@ module.exports = function () {
     this.addUser = function (userData, callback) {
         //用户名不能重复
         var usernameJson = {"username": userData.username};
-        this.findOneByID(this.tableName, usernameJson, function (ret) {
+        this.findOneByID(usernameJson, function (ret) {
             if (!ret) {
                 //如果用户名不存在，则添加用户
                 _self.insert(_self.tableName, userData, function (ret2) {

@@ -27,7 +27,6 @@ module.exports = function () {
             if (ret) {
                 userId = ret.userId;
                 var search = {_id : ObjectID(userId)};
-                //console.log(search);
                 UserModuleRead.findOneByID(search,function(ret){
                     if(ret){
                         res.render('index.jade', {'username': ret.username});

@@ -30,7 +30,7 @@ module.exports = function () {
                     return;
                 }
                 if (ret) {
-                    UserRegister.findOneByID(this.tableName, {'username': value.username}, function (doc) {
+                    UserRegister.findOneByID({'username': value.username}, function (doc) {
                         var userId = doc._id;
                         lib.session.setSession(res, req, userId, function (session) {
                             res.setHeader('Set-Cookie', 'SESSID=' + session.SESSID);
