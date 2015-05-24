@@ -130,7 +130,7 @@ module.exports = function () {
     }
 
     /**
-     *  ??????????
+     *   delet a document form collection
      *
      */
     this.remove = function (tableName, whereJson, callback) {
@@ -146,5 +146,32 @@ module.exports = function () {
                 });
             });
         });
-    }
-}
+    };
+    
+    /*
+     * find collections satisfy condition 
+     */
+    this.select = function (tableName, whereJson, orderByJson, limitJson, fieldJson, callback) {
+        connection(function (mdbConn) {
+            mdbConn.collection(tableName, function (err, collection) {
+                var cursor = collection.find(whereJson, fieldJson);
+                if (orderByJson) {
+                    cursor.sort(orderByJson);
+                }
+                if (limitJson) {
+                    var skip = limitJson['skip'] ? limitJson['skip'] : 0;
+                    cursor.limit(limitJson['num']).skip(skip);
+                }
+                cursor.toArray(function(err, docs){
+                    if (err) {
+                        callback(true);
+                    } 
+                    else {
+                        callback(docs);
+                    }
+                });
+                cursor.rewind();
+            });
+        });
+    };
+};
