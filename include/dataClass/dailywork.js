@@ -3,13 +3,13 @@
  * @
  */
 
-var Mysql = require("./mysql.js");
+var Mongodb = require("./mongodb.js");
 var util = require("util");
 
 var DailyWork = function () {
-    Mysql.call(this);
-    util.inherits(this, Mysql);
-
+    Mongodb.call(this);
     this.tableName = "dailywork";
-}
+};
+util.inherits(DailyWork, Mongodb);
+
 module.exports = DailyWork;

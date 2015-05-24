@@ -40,21 +40,25 @@ module.exports = function () {
 
     /*
      * insert data to database 如果成功，返回插入的objectId
-     * @param {type} tableName
      * @param {type} whereJson
+     * @param {type} option
      * @param {type} callback
-     * @returns {undefined}
+     * @returns {undefined}t
      */
-    this.insert = function (tableName, rowInfo, callback) {
+    this.insert = function (rowInfo, option, callback) {
         connection(function (mdbConn) {
-            mdbConn.collection(tableName, function (err, collection) {
-                collection.insert(rowInfo, function (err, objects) {
+            mdbConn.collection(_self.tableName, function (err, collection) {
+                if (err) {
+                    callback(err, false);
+                }
+                collection.insert(rowInfo, option, function (err, objects) {
                     if (err) {
                         //write log
-                        callback(false);
+                        callback(err, false);
+                        return;
                     }
                     else {
-                        callback(objects);
+                        callback(null, objects);
                     }
                 });
             });
@@ -62,10 +66,22 @@ module.exports = function () {
     };
 
 
-    //????????????
-    this.select = function (tableName, whereJson, orderByJson, limitJson, fieldJson, callback) {
+    /*
+     * 查找符合条件的documents
+     * @param {type} tableName 表名
+     * @param {type} whereJson 查询条件
+     * @param {type} orderByJson 排序条件
+     * @param {type} limitJson 限制返回
+     * @param {type} fieldJson 返回的字段类型
+     * @param {type} callback 回调函数
+     * @returns {undefined}
+     */
+    this.select = function (whereJson, orderByJson, limitJson, fieldJson, callback) {
         connection(function (mdbConn) {
-            mdbConn.collection(tableName, function (err, collection) {
+            mdbConn.collection(_self.tableName, function (err, collection) {
+                if (err) {
+                    callback(err);
+                }
                 var cursor = collection.find(whereJson, fieldJson);
                 if (orderByJson) {
                     cursor.sort(orderByJson);
@@ -76,21 +92,27 @@ module.exports = function () {
                 }
                 cursor.toArray(function (err, docs) {
                     if (err) {
-                        callback(true);
+                        callback(err);
                     }
                     else {
-                        callback(docs);
+                        if(docs.length == 0){
+                            callback(null, null);
+                        }
+                        else{
+                            callback(null, docs);
+                        }
                     }
                 });
                 cursor.rewind();
             });
         });
-    }
+    };
 
-    /**
-     * 查找单条数据
-     * 并不通过系统的mongodb进行查找
-     * change: use findOne to replace find method;
+    /*
+     * 查找单条数据,并不通过系统的mongodb进行查找,change: use findOne to replace find method;
+     * @param {type} whereJson
+     * @param {type} callback
+     * @returns {undefined}
      */
     this.findOneByID = function (whereJson, callback) {
         connection(function (mdbConn) {
@@ -109,9 +131,14 @@ module.exports = function () {
         });
     };
 
-    /**
-     * 更新用户的操作
-     * 该方法更新了option参数，之前使用默认值{safe: true}
+    /*
+     * 更新用户的操作,该方法更新了option参数，之前使用默认值{safe: true}
+     * @param {type} tableName
+     * @param {type} whereJson
+     * @param {type} rowInfo
+     * @param {type} option
+     * @param {type} callback
+     * @returns {undefined}
      */
     this.modify = function (tableName, whereJson, rowInfo, option, callback) {
         connection(function (mdbConn) {
@@ -125,13 +152,16 @@ module.exports = function () {
                         callback(true);
                     }
                 });
-            })
+            });
         });
-    }
+    };
 
     /**
-     *   delet a document form collection
-     *
+     * delet a document form collection
+     * @param {type} tableName
+     * @param {type} whereJson
+     * @param {type} callback
+     * @returns {undefined}
      */
     this.remove = function (tableName, whereJson, callback) {
         connection(function (mdbConn) {
@@ -144,33 +174,6 @@ module.exports = function () {
                         callback(true);
                     }
                 });
-            });
-        });
-    };
-    
-    /*
-     * find collections satisfy condition 
-     */
-    this.select = function (tableName, whereJson, orderByJson, limitJson, fieldJson, callback) {
-        connection(function (mdbConn) {
-            mdbConn.collection(tableName, function (err, collection) {
-                var cursor = collection.find(whereJson, fieldJson);
-                if (orderByJson) {
-                    cursor.sort(orderByJson);
-                }
-                if (limitJson) {
-                    var skip = limitJson['skip'] ? limitJson['skip'] : 0;
-                    cursor.limit(limitJson['num']).skip(skip);
-                }
-                cursor.toArray(function(err, docs){
-                    if (err) {
-                        callback(true);
-                    } 
-                    else {
-                        callback(docs);
-                    }
-                });
-                cursor.rewind();
             });
         });
     };

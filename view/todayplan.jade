@@ -1,0 +1,33 @@
+html
+    head
+        meta(charset='utf8')
+        link(rel="stylesheet",href="style.css")
+        title 今日工作总结
+    body
+        if(result)
+            p   今日预定完成任务内容
+                p 任务标题: '#{result.title}'
+                p 任务内容: '#{result.content}'
+            p   睡前任务完成情况
+            form(action='/dailywrite/completeState', method='POST',)
+                input(type='hidden', name='id', value = '#{result._id}')
+                p   结束时间
+                    div
+                        input(type='text',name='sleeptime')
+                p   任务完成情况
+                    div
+                        textarea(name="completeState",cols=150,rows=2)
+                div
+                    input(type='submit',value='提交')     
+        else
+            form(action='/dailywrite/write', method='POST')
+                div
+                    label Title:
+                    br
+                    textarea(name="title",cols=150,rows=2)
+                div 
+                    label Content:
+                    br
+                    textarea(name="content",cols=150,rows=2)
+                div
+                    input(type='submit',value='提交')            
