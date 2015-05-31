@@ -18,22 +18,22 @@ module.exports = function () {
         res = response;
         req = request;
     };
-    
+
     /*
      * initialize login user
      */
     this.view = function () {
-        lib.session.isLogin(res, req, function (ret) {
+        lib.session.isLogin(res, req, function (err, ret) {
             if (ret) {
                 userId = ret.userId;
-                var search = {_id : ObjectID(userId)};
-                UserModuleRead.findOneByID(search,function(ret){
-                    if(ret){
+                var search = {_id: ObjectID(userId)};
+                UserModuleRead.findOneByID(search, function (ret) {
+                    if (ret) {
                         res.render('index.jade', {'username': ret.username});
                     }
                 });
             }
-            else{
+            else {
                 res.render('index.jade');
             }
         });

@@ -84,8 +84,8 @@ exports.exist = function (key, callback) {
     client.exists(key, function (err, reply) {
         if (reply === 1) {
             client.expire(key, 60 * 30);
-            callback(true);
+            callback(null,reply);
         }
-        callback(false);
+        callback(err);
     });
-}
+};
