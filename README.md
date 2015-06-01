@@ -6,6 +6,7 @@ Website write by node.js
 -----
 路由文件router.js,路由使用的是自然映射规则。通过MIME对静态文件和逻辑请求进去不同的处理，处理静态文件的请求主要是include/staticManage.js进行处理。静态文件中设置了过期缓存。
 路由规则使用的是/module/action?param的方式，第一个分割的是模块名称，第二个是方法名，默认情况下是index/index
+
                 var className = require(APP + module);
                 var classObj = new className();
                 if (classObj) {
@@ -20,6 +21,7 @@ Website write by node.js
 网站的MVC中VIEW
 -----
 使用的jade模块，方法挂接到了res上，在根目录下的index.js中
+
                     res.render = function () {
                         var template = arguments[0];
                         var options = arguments[1];
@@ -34,6 +36,7 @@ Website write by node.js
 网站使用的数据库mongodb
 ----
 使用的是mongodb数据库，数据库的基类文件是include/dataClass/mongodb模块，其他的模块都继承它，比如usermodule
+
                 if (!mdbConn) {
                     var server = new mongodb.Server(client.host, client.port);
                     mdb = new mongodb.Db(client.dbNmae, server, {safe: true});
@@ -50,6 +53,7 @@ Website write by node.js
 ----
 使用Redis作为缓存，缓存文件是include/dataClass/redis模块，暂时没有搭建redis集群，所以没有缓存负载均衡一说，这方面并不难，包括各个模块介绍，在今后的过程中都会逐步完善。
 下面介绍设置过期限制，对于网站的Session
+
                 exports.hmset = function (key, json) {
                     var expires = arguments[2];
                     try {
