@@ -91,7 +91,14 @@ var server = lib.http.createServer(function (req, res) {
     //res.writeHead(200,{'Content-Type':'text/html'});
     lib.router.router(res, req);
 });
-server.listen(3000, '127.0.0.1');
+
+process.on('message',function(msg,tcp){
+    if(msg === 'server'){
+        tcp.on('connection',function(socket){
+            server.emit('connetion',socket);
+        });
+    }
+});
 
 /**
  *创建socket服务对象
