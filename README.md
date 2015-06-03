@@ -69,13 +69,53 @@ Website write by node.js
 
 网站的http参数处理，包括get请求，post请求，cookie
 ----
+设计的处理在 httpParam 模块中，详细请看node_modules下的httpParam文件，因为目录结构不合理，之后会专门创建一个中间文件夹，用于存放中间件模块
+1. cookie处理
+读取cookie
 
+            if (typeof req.headers.cookie !== 'undefined') {   //判断是否存在cookie
+                req.headers.cookie.split(';').forEach(function (cookie) {
+                    var part = cookie.split('=');
+                    cookies[part[0].trim()] = (part[1] || '').trim();
+                });
+            } 
+
+设置cookie主要通过serialize方法构造，注意设置cookie的时候，可以传递数组
+
+2. get处理
+                exports.GET = function (req) {
+                    var key = arguments[1];
+                    var param = url.parse(req.url).query;
+                    var json_param = querystring.parse(param);
+                    if (arguments.length === 1) {
+                        return json_param;
+                    }
+                    if (!!key) {
+                        return json_param[key] ? json_param[key] : '';
+                    }
+                    return json_param;
+                };
+
+3. post处理
+这里的处理专门使用了Buffer的功能，但是没有进行性能测试，在今后的过程中会进行性能ab简单测试，简单截取方法如下：
+
+                    req.addListener('end', function () {
+                           //通过拼接buffer
+                           var buffer = Buffer.concat(chunks, size);
+                           var str = iconv.decode(buffer, 'utf8');
+                           var param = querystring.parse(str);
+                           if (!callback && typeof key === 'function') {
+                               callback = key;
+                               key = '';
+                           }
+                           callback(param);
+                   });
 
 
 网站的主从工作模式（进程管理）
 ----
-    使用 child_process 模块可以灵活的实现进程的创建。通过主进程和子进程之间传递句柄，来实现端口共用。灵活的进程间事件的传递机制，使得实现主从服务简单高效。网站的
-    入口文件是 nginx.js ,该文件创建子进程，实现某种意义上的nginx服务器功能，下面简要说明，详细请看nginx和index的源码。
+使用 child_process 模块可以灵活的实现进程的创建。通过主进程和子进程之间传递句柄，来实现端口共用。灵活的进程间事件的传递机制，使得实现主从服务简单高效。网站的
+入口文件是 nginx.js ,该文件创建子进程，实现某种意义上的nginx服务器功能，下面简要说明，详细请看nginx和index的源码。
 
             var createServer = function () {
                 var sub = fork('./index.js');
@@ -96,7 +136,7 @@ Website write by node.js
                 console.log('create sub server pid :' + sub.pid);
             };
 
-            index对 server 的处理：
+index对 server 的处理：
 
                 process.on('message', function (msg, tcp) {
                     if (msg === 'server') {
