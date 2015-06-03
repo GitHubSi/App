@@ -22,7 +22,7 @@ global.STATIC = BASE_DIR + "/resource/";
 global.CONF = BASE_DIR + "/conf/";
 global.INCLUDE = BASE_DIR + "/include/";
 global.DATACLASS = INCLUDE + "dataClass/";
-global.LOG =  BASE_DIR + "/log/";
+global.LOG = BASE_DIR + "/log/";
 
 /**
  *modules引入
@@ -42,8 +42,8 @@ global.lib = {
     formidable: require('formidable'),
     dgram: require("dgram"),
     redis: require(DATACLASS + 'redis'),
-    readConfig:require(INCLUDE + 'configRead'),
-    log:require(LIB+'log')
+    readConfig: require(INCLUDE + 'configRead'),
+    log: require(LIB + 'log')
 }
 /**
  *引入全局变量，存储socket连接用户信息
@@ -92,12 +92,32 @@ var server = lib.http.createServer(function (req, res) {
     lib.router.router(res, req);
 });
 
-process.on('message',function(msg,tcp){
-    if(msg === 'server'){
-        tcp.on('connection',function(socket){
-            server.emit('connetion',socket);
+//监听服务器端口
+var worker;
+process.on('message', function (msg, tcp) {
+    if (msg === 'server') {
+        worker = tcp;
+        tcp.on('connection', function (socket) {
+            server.emit('connection', socket);
         });
     }
+});
+
+//服务出现异常时，结束进程
+process.on('uncaughtException', function (err) {
+    process.send({act: 'suicide'});
+
+    //服务停止接收新的连接
+    worker.close(function () {
+
+        //所有连接退出后，结束进程
+        process.exit(1);
+    });
+
+    //异常触发时，设置一个超时处理
+    setTimeout(function () {
+        process.exit(1);
+    }, 5000);
 });
 
 /**

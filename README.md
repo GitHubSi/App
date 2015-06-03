@@ -69,3 +69,42 @@ Website write by node.js
 
 网站的http参数处理，包括get请求，post请求，cookie
 ----
+
+
+
+网站的主从工作模式（进程管理）
+----
+    使用 child_process 模块可以灵活的实现进程的创建。通过主进程和子进程之间传递句柄，来实现端口共用。灵活的进程间事件的传递机制，使得实现主从服务简单高效。网站的
+    入口文件是 nginx.js ,该文件创建子进程，实现某种意义上的nginx服务器功能，下面简要说明，详细请看nginx和index的源码。
+
+            var createServer = function () {
+                var sub = fork('./index.js');
+                //监听进程间的通讯
+                sub.on('message', function (msg) {
+                    if (msg.act === 'suicide') {
+                        createServer();
+                    }
+                });
+
+                //子进程退出时触发该事件
+                sub.on('exit', function () {
+                    console.log('sub server ' + sub.pid + ' exited');
+                    delete workers[sub.pid];
+                });
+                sub.send('server', server);
+                workers[sub.pid] = sub;
+                console.log('create sub server pid :' + sub.pid);
+            };
+
+            index对 server 的处理：
+
+                process.on('message', function (msg, tcp) {
+                    if (msg === 'server') {
+                        worker = tcp;
+                        tcp.on('connection', function (socket) {
+                            server.emit('connection', socket);
+                        });
+                    }
+                });
+
+    
