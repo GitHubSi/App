@@ -1,6 +1,13 @@
 # App
 Website write by node.js
 简介：程序一直在修改，这里截取的都是核心代码，供说明了解，详细请下载代码。代码主要用于学习了解node语言。
+
+网站的目录结构
+-----
+    ----nginx  入口文件
+    ----router  路由文件
+
+
                 
 网站简单的路由规则
 -----
@@ -83,6 +90,7 @@ Website write by node.js
 设置cookie主要通过serialize方法构造，注意设置cookie的时候，可以传递数组
 
 2. get处理
+
                 exports.GET = function (req) {
                     var key = arguments[1];
                     var param = url.parse(req.url).query;
@@ -146,5 +154,11 @@ index对 server 的处理：
                         });
                     }
                 });
+
+
+
+
+
+
 
     
