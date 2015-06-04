@@ -43,7 +43,8 @@ exports.POST = function (req) {
         
         //通过拼接buffer
         var buffer = Buffer.concat(chunks, size);
-        var str = iconv.decode(buffer, 'utf8');
+        //var str = iconv.decode(buffer, 'utf8');
+        var str = buffer.toString();
         var param = querystring.parse(str);
         if (!callback && typeof key === 'function') {
             callback = key;
@@ -89,7 +90,7 @@ exports.COOKIE = function (req) {
  *              res.setHeader('Set-Cookie',[serialize('isVisit',1),serialize('baz',1)]))
  */
 exports.serialize = function (name, val, opt) {
-    var pairs = [name + '=' + encode(val)];
+    var pairs = [name + '=' + val];
     opt = opt || {};
     if (opt.maxAge)
         pairs.push('Max-Age=' + opt.maxAge);

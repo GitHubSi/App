@@ -27,7 +27,7 @@ var createServer = function () {
 };
 
 //创建主从结构,根据cpu个数分配
-for (var i = 0; i < os.length ; i++) {
+for (var i = 0; i < os.length - 3; i++) {
     createServer();
 }
 

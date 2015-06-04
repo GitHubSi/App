@@ -53,7 +53,12 @@ module.exports = function () {
                 console.log(err);
                 return;
             }
-            res.render('todayplan.jade', {'result': result[0]});
+            if(result){
+                res.render('todayplan.jade', {'result': result[0]});
+            }
+            else{
+                res.render('todayplan.jade', {'result': 0});
+            }
         });
     };
 };

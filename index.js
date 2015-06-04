@@ -16,12 +16,12 @@ var encodeModule = require('./encode_module.js');
 //设置路径全局变量
 global.BASE_DIR = __dirname;
 global.VIEW = BASE_DIR + "/view/";
-global.LIB = BASE_DIR + "/node_modules/";
+global.LIB = BASE_DIR + "/middleware/";
 global.APP = BASE_DIR + "/component/";
 global.STATIC = BASE_DIR + "/resource/";
 global.CONF = BASE_DIR + "/conf/";
 global.INCLUDE = BASE_DIR + "/include/";
-global.DATACLASS = INCLUDE + "dataClass/";
+global.DATACLASS = INCLUDE + "data/";
 global.LOG = BASE_DIR + "/log/";
 
 /**
@@ -44,7 +44,7 @@ global.lib = {
     redis: require(DATACLASS + 'redis'),
     readConfig: require(INCLUDE + 'configRead'),
     log: require(LIB + 'log')
-}
+};
 /**
  *引入全局变量，存储socket连接用户信息
  */
@@ -65,7 +65,7 @@ var server = lib.http.createServer(function (req, res) {
         if (!!sessonID) {
 
         }
-    }
+    };
     /**
      * @description 加载模板文件，默认加载的路径为VIEW
      */
@@ -91,7 +91,8 @@ var server = lib.http.createServer(function (req, res) {
     //res.writeHead(200,{'Content-Type':'text/html'});
     lib.router.router(res, req);
 });
-
+server.listen(3000);
+/*
 //监听服务器端口
 var worker;
 process.on('message', function (msg, tcp) {
@@ -105,6 +106,7 @@ process.on('message', function (msg, tcp) {
 
 //服务出现异常时，结束进程
 process.on('uncaughtException', function (err) {
+    console.log(err);
     process.send({act: 'suicide'});
 
     //服务停止接收新的连接

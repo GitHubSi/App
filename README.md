@@ -4,15 +4,16 @@ Website write by node.js
 
 网站的目录结构
 -----
-    ----nginx  入口文件
-    ----router  路由文件
+    ----nginx   入口文件  通过主进程根据服务器cpu个数创建多个工作进程提供服务
+    ----router  路由文件  
+    ----conf    网站的配置文件
+    ----middleware  网站的中间件  比如封装的专门处理http请求的模块
 
 
-                
 网站简单的路由规则
 -----
-路由文件router.js,路由使用的是自然映射规则。通过MIME对静态文件和逻辑请求进去不同的处理，处理静态文件的请求主要是include/staticManage.js进行处理。静态文件中设置了过期缓存。
-路由规则使用的是/module/action?param的方式，第一个分割的是模块名称，第二个是方法名，默认情况下是index/index
+路由文件名：router.js, 路由使用自然映射规则。通过MIME将请求分为两个分支进行处理，静态请求和动态请求。处理静态请求的模块名：include/staticManage.js。
+动态请求路由规则形如：/module/action?param的方式，分别是模块名称，模块中方法名。任意一个不存在，默认使用：index/index
 
                 var className = require(APP + module);
                 var classObj = new className();
