@@ -2,6 +2,7 @@
 Website write by node.js
 简介：程序一直在修改，主要用于学习了解node语言。程序暂时实现的功能包括用户的注册，登录，写每日工作计划以及浏览之前的计划内容。数据库采用mongodb存储，第
 三方缓存采用了redis。知识内容尽力涵盖node的大部分内容，包括async的异步并发控制，node的多进程架构，Buffere等等等等。
+博客中也有介绍：http://blog.csdn.net/whynottrythis
 
 网站的目录结构
 -----
