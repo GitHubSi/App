@@ -51,7 +51,11 @@ module.exports = function () {
             },
             //3. 查看用户是否存在数据库
             function (args, callback) {
-                UserModuleRead.checkUser(args, function (result) {
+                UserModuleRead.checkUser(args, function (err, result) {
+                    //暂时不做处理
+                    if(err){
+                        return ;
+                    }
                     if (result) {
                         lib.session.setSession(res, req, result._id, function (session) {
                             res.setHeader('Set-Cookie', lib.httpParam.serialize('SESSID=', session.SESSID, {path: '/'}));

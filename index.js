@@ -91,8 +91,8 @@ var server = lib.http.createServer(function (req, res) {
     //res.writeHead(200,{'Content-Type':'text/html'});
     lib.router.router(res, req);
 });
-server.listen(3000);
-/*
+//server.listen(3000);
+
 //监听服务器端口
 var worker;
 process.on('message', function (msg, tcp) {

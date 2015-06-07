@@ -1,9 +1,9 @@
 {
     "qq": {
-        "host": "smtp.exmail.qq.com",
+        "host": "smtp.qq.com",
         "port": 465,
         "user": "1520107395@qq.com",
-        "pass": "Smtp××××××",
+        "pass": "Smtp910611",
         "use_authentication": true
     },
     "gmail":{

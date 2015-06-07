@@ -11,7 +11,7 @@ var smtpTransport = require('nodemailer-smtp-transport');
 var emailConf = config.get("email.json", "qq");
 
 var mail = nodeMailer.createTransport(smtpTransport({
-    host: emailConf["host"],
+    host: emailConf["host"],//"smtp.qq.com"
     port: emailConf["post"],
     secure: true,
     auth: {
@@ -36,7 +36,7 @@ exports.sendMail = function (emailAddress, title, content) {
     }, function (error, success) {
         if (!error) {
             //日志记录
-            console.log('message success', success);
+            console.log('message success');
         } else {
             lib.log.write("maillog/sendmail.log",[error]);
             console.log('failed' + error);

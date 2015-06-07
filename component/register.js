@@ -7,7 +7,7 @@ var mailmessage = require(INCLUDE + "mailmessage.js");
 var mail = require(LIB + "email.js");
 
 var UserRegister = new user_register();
-var res, req,userId;
+var res, req, userId;
 module.exports = function () {
 
     this.init = function (response, request) {
@@ -24,13 +24,22 @@ module.exports = function () {
             }
             //对用户密码进行加密处理
             value.password = digist.tcrypto(value.password);
-            UserRegister.addUser(value, function (ret) {
-                if (ret === false) {
-                    res.render("register.jade", {error: '用户名已经存在'});
+            UserRegister.addUser(value, function (err) {
+                if (err) {
+                    if (err.self_code == "400") {
+                        res.render("register.jade", {error: '用户名已经存在'});
+                        return;
+                    }
+                    //其他情况暂时不做处理
                     return;
                 }
-                if (ret) {
-                    UserRegister.findOneByID({'username': value.username}, function (doc) {
+                else {
+                    //用户信息已经插入到数据库中，从数据库中获取插入的数据
+                    UserRegister.findOneByID({'username': value.username}, function (err, doc) {
+                        //如果查询中出现异常，暂时不处理
+                        if (err) {
+                            return;
+                        }
                         var userId = doc._id;
                         lib.session.setSession(res, req, userId, function (session) {
                             res.setHeader('Set-Cookie', 'SESSID=' + session.SESSID);
@@ -51,9 +60,9 @@ module.exports = function () {
     };
 
     this.view = function () {
-        lib.session.isLogin(res, req,function(ret){
-            if(ret){
-                userId=ret.userId;
+        lib.session.isLogin(res, req, function (ret) {
+            if (ret) {
+                userId = ret.userId;
             }
         });
         res.render('register.jade');

@@ -50,6 +50,7 @@ module.exports = function () {
             mdbConn.collection(_self.tableName, function (err, collection) {
                 if (err) {
                     callback(err, false);
+                    return;
                 }
                 collection.insert(rowInfo, option, function (err, objects) {
                     if (err) {
@@ -57,9 +58,7 @@ module.exports = function () {
                         callback(err, false);
                         return;
                     }
-                    else {
-                        callback(null, objects);
-                    }
+                    callback(null, objects);
                 });
             });
         });
@@ -95,10 +94,10 @@ module.exports = function () {
                         callback(err);
                     }
                     else {
-                        if(docs.length == 0){
+                        if (docs.length == 0) {
                             callback(null, null);
                         }
-                        else{
+                        else {
                             callback(null, docs);
                         }
                     }
@@ -118,14 +117,15 @@ module.exports = function () {
         connection(function (mdbConn) {
             mdbConn.collection(_self.tableName, function (err, collection) {
                 if (err) {
+                    callback(err);
                     return;
                 }
                 collection.findOne(whereJson, function (err, item) {
-                    if (item) {
-                        callback(item);
-                    } else {
-                        callback(false);
+                    if (err) {
+                        callback(err);
+                        return;
                     }
+                    callback(null, item);
                 });
             });
         });

@@ -11,6 +11,10 @@ Website write by node.js
     ----conf    网站的配置文件
     ----middleware  网站的中间件  比如封装的专门处理http请求的模块
 
+网站代码规范
+-----
+    1. 回调函数的第一个参数必须是err对象，在err中可以添加self_code和self_msg属性，用于提示错误信息，err不存在则参数为null；
+
 
 网站简单的路由规则
 -----
